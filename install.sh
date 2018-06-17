@@ -421,7 +421,7 @@ sudo chmod +x /var/stratum/config/run.sh
     output " "
 
     sudo aptitude -y install letsencrypt
-    sudo letsencrypt certonly -a webroot --webroot-path=/var/web $letsencrypt_args
+    sudo letsencrypt certonly -a webroot --webroot-path=/var/web --email $EMAIL --agree-tos -d $server_name -d $domain_name -d "www."$domain_name
     sudo rm /etc/nginx/sites-available/$server_name.conf
     sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
     # I am SSL Man!
@@ -623,7 +623,7 @@ sudo chmod +x /var/stratum/config/run.sh
     sleep 3
 
     sudo aptitude -y install letsencrypt
-    sudo letsencrypt certonly -a webroot --webroot-path=/var/web letsencrypt_args
+    sudo letsencrypt certonly -a webroot --webroot-path=/var/web --email $EMAIL --agree-tos -d $server_name -d $domain_name -d "www."$domain_name
     sudo rm /etc/nginx/sites-available/$server_name.conf
     sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
     # I am SSL Man!
