@@ -27,16 +27,29 @@ displayErr() {
     output " "
     output "Make sure you double check before hitting enter! Only one shot at these!"
     output " "
-    read -e -p "Enter time zone (e.g. America/New_York) : " TIME
-    read -e -p "Server name (no http:// or www. just example.com) : " server_name
-    read -e -p "Are you using a subdomain (pool.example.com?) [y/N] : " sub_domain
-    read -e -p "Enter support email (e.g. admin@example.com) : " EMAIL
-    read -e -p "Set stratum to AutoExchange? i.e. mine any coinf with BTC address? [y/N] : " BTC
-    read -e -p "Please enter a new location for /site/adminRights this is to customize the admin entrance url (e.g. myAdminpanel) : " admin_panel
-    read -e -p "Enter your Public IP for admin access (http://www.whatsmyip.org/) : " Public
-    read -e -p "Install Fail2ban? [Y/n] : " install_fail2ban
-    read -e -p "Install UFW and configure ports? [Y/n] : " UFW
-    read -e -p "Install LetsEncrypt SSL? IMPORTANT! You MUST have your domain name pointed to this server prior to running the script!! [Y/n]: " ssl_install
+#    read -e -p "Enter time zone (e.g. America/New_York) : " TIME
+#    read -e -p "Server name (no http:// or www. just example.com) : " server_name
+#    read -e -p "Are you using a subdomain (pool.example.com?) [y/N] : " sub_domain
+#    read -e -p "Enter support email (e.g. admin@example.com) : " EMAIL
+#    read -e -p "Set stratum to AutoExchange? i.e. mine any coinf with BTC address? [y/N] : " BTC
+#    read -e -p "Please enter a new location for /site/adminRights this is to customize the admin entrance url (e.g. myAdminpanel) : " admin_panel
+#    read -e -p "Enter your Public IP for admin access (http://www.whatsmyip.org/) : " Public
+#    read -e -p "Install Fail2ban? [Y/n] : " install_fail2ban
+#    read -e -p "Install UFW and configure ports? [Y/n] : " UFW
+#    read -e -p "Install LetsEncrypt SSL? IMPORTANT! You MUST have your domain name pointed to this server prior to running the script!! [Y/n]: " ssl_install
+
+    TIME="Los_Angeles"
+    domain_name="minesome.gold"
+    server_name="us-west.$domain_name"
+    sub_domain="y"
+    EMAIL="admin@minesome.gold"
+    BTC="N"
+    admin_panel="myadmin"
+    Public="68.98.61.253"
+    install_fail2ban="Y"
+    UFW="Y"
+    ssl_install="Y"
+    letsencrypt_args="--email \"$EMAIL\" --agree-tos -d \"$server_name\" -d \"$domain_name\" -d \" www.$domain_name\""
 
     output " "
     output "Updating system and installing required packages."
@@ -408,7 +421,7 @@ sudo chmod +x /var/stratum/config/run.sh
     output " "
 
     sudo aptitude -y install letsencrypt
-    sudo letsencrypt certonly -a webroot --webroot-path=/var/web --email "$EMAIL" --agree-tos -d "$server_name"
+    sudo letsencrypt certonly -a webroot --webroot-path=/var/web $letsencrypt_args
     sudo rm /etc/nginx/sites-available/$server_name.conf
     sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
     # I am SSL Man!
@@ -610,7 +623,7 @@ sudo chmod +x /var/stratum/config/run.sh
     sleep 3
 
     sudo aptitude -y install letsencrypt
-    sudo letsencrypt certonly -a webroot --webroot-path=/var/web --email "$EMAIL" --agree-tos -d "$server_name" -d www."$server_name"
+    sudo letsencrypt certonly -a webroot --webroot-path=/var/web letsencrypt_args
     sudo rm /etc/nginx/sites-available/$server_name.conf
     sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
     # I am SSL Man!
@@ -839,7 +852,7 @@ define('"'"'YAAMP_DBPASSWORD'"'"', '"'"''"${password}"''"'"');
 define('"'"'YAAMP_PRODUCTION'"'"', true);
 define('"'"'YAAMP_RENTAL'"'"', false);
 define('"'"'YAAMP_LIMIT_ESTIMATE'"'"', false);
-define('"'"'YAAMP_FEES_MINING'"'"', 0.5);
+define('"'"'YAAMP_FEES_MINING'"'"', 0.9);
 define('"'"'YAAMP_FEES_EXCHANGE'"'"', 2);
 define('"'"'YAAMP_FEES_RENTING'"'"', 2);
 define('"'"'YAAMP_TXFEE_RENTING_WD'"'"', 0.002);
