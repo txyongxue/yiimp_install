@@ -10,4 +10,5 @@
  #screen -dmS skein $STRATUM_DIR/run.sh skein
  #screen -dmS x11 $STRATUM_DIR/run.sh x11
  #screen -dmS xevan $STRATUM_DIR/run.sh xevan
- screen -dmS x16s $STRATUM_DIR/run.sh x16s
+ #screen -dmS x16s $STRATUM_DIR/run.sh x16s
+ screen -dmS lyra2z $STRATUM_DIR/run.sh lyra2z
